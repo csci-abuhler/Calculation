@@ -1,0 +1,17 @@
+#outer-container {
+  background-color: rgb(248, 0, 0);
+  width: auto;
+  height: auto;
+}
+
+#inner-container {
+  background-color: rgb(37, 37, 37);
+  width: 320px;
+  height: 480px;
+}
+
+#screen {
+  width: auto;
+  height: 25%;
+  background-color: rgb(59, 34, 34);
+}
