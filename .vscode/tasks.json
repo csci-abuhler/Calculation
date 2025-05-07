@@ -1,0 +1,15 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "Live Preview",
+      "workspacePath": "g:\\My Drive\\Important Files\\Programming\\Daily-UI\\004\\Calculation",
+      "problemMatcher": [],
+      "label": "Live Preview: Run Server",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    }
+  ]
+}
