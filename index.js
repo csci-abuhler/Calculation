@@ -1,4 +1,5 @@
 var screenDisplay = "";
+var resultDisplay = "";
 
 $("button").on("click", function () {
   if ($(this).attr("id") === "clear") {
@@ -56,5 +57,21 @@ $("button").on("click", function () {
     let newScreenDisplay = "0";
     screenDisplay += newScreenDisplay;
     $("#function-screen").text(screenDisplay);
+  } else if ($(this).attr("id") === "decimal") {
+    // decimal button
+    let newScreenDisplay = "";
+
+    if (screenDisplay === "") {
+      newScreenDisplay = "0.0";
+    } else {
+      newScreenDisplay += ".";
+    } // if
+
+    screenDisplay += newScreenDisplay;
+    $("#function-screen").text(screenDisplay);
+  } else if ($(this).attr("id") === "equals") {
+    let newScreenDisplay = screenDisplay;
+    resultDisplay = screenDisplay;
+    $("#result-screen").text(resultDisplay);
   } // else if
 });
