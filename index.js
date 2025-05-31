@@ -1,11 +1,16 @@
 var screenDisplay = "";
 var resultDisplay = "";
 
+var operatorChoice = "";
+var firstValue = 0.0;
+var secondValue = 0.0;
+
 $("button").on("click", function () {
   if ($(this).attr("id") === "clear") {
     // clear button
     let newScreenDisplay = "";
     screenDisplay = newScreenDisplay;
+    firstValue = "";
     $("#function-screen").text(newScreenDisplay);
   } else if ($(this).attr("id") === "one") {
     // one button
@@ -61,11 +66,12 @@ $("button").on("click", function () {
     // decimal button
     let newScreenDisplay = "";
 
+    console.log(screenDisplay.charAt(screenDisplay.length - 1));
+
     if (screenDisplay === "") {
       newScreenDisplay = "0.0";
     } else if (screenDisplay === "0.0") {
-      newScreenDisplay =
-        "0." + screenDisplay.slice(0, screenDisplay.length - 1);
+      newScreenDisplay = "0." + screenDisplay.slice(0, screenDisplay.length);
     } else {
       newScreenDisplay += ".";
     } // if
@@ -78,16 +84,69 @@ $("button").on("click", function () {
     $("#function-screen").text(screenDisplay);
   } else if ($(this).attr("id") === "equals") {
     let newScreenDisplay = screenDisplay;
-    resultDisplay = screenDisplay;
+
+    if (
+      secondValue === undefined ||
+      secondValue === null ||
+      secondValue === ""
+    ) {
+      secondValue = 0.0;
+    } else {
+      secondValue = parseFloat(
+        newScreenDisplay.charAt(newScreenDisplay.length - 1)
+      );
+    } // if
+
+    var result = 0.0;
+    if (operatorChoice === " + ") {
+      result = firstValue + secondValue;
+    } // if
+
+    resultDisplay = result.toString();
     $("#result-screen").text(resultDisplay);
   } else if ($(this).attr("id") === "change-sign") {
     let newScreenDisplay = parseFloat(screenDisplay);
     newScreenDisplay *= -1.0;
     screenDisplay = new String(newScreenDisplay);
     $("#function-screen").text(screenDisplay);
+  } else if ($(this).attr("id") === "add") {
+    console.log("PLUS!");
+    operatorChoice = " + ";
+    if (firstValue === undefined || firstValue === null || firstValue === "") {
+      firstValue = 0.0;
+    } else {
+      firstValue = screenDisplay;
+    } // if
+    firstValue = parseFloat(firstValue);
+    screenDisplay += operatorChoice;
+    $("#function-screen").text(screenDisplay);
+    //calculate("+");
+  } else if ($(this).attr("id") === "subtract") {
+    console.log("MINUS!");
+    //calculate("-");
+  } else if ($(this).attr("id") === "multiply") {
+    console.log("MULTIPLY!");
+    //calculate("*");
+  } else if ($(this).attr("id") === "divide") {
+    console.log("DIVIDE!");
+    //calculate("/");
   } // else if
 });
 
+/*
+// Perform the calculation
+function calculate(operator) {
+  if (screenDisplay === "") {
+    resultDisplay = "0";
+  } else {
+    resultDisplay += screenDisplay + " " + operator;
+  } // if
+  $("#result-screen").text(parseFloat(resultDisplay));
+  console.log(resultDisplay);
+} // calculate
+*/
+
+// Check if there is more than one decimal in a number.
 function moreThanOneDecimal(number) {
   var count = 0;
   for (i = 0; i < number.length; i++) {
