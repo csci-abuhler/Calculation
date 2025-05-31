@@ -8,65 +8,80 @@ var secondValue = 0.0;
 $("button").on("click", function () {
   if ($(this).attr("id") === "clear") {
     // clear button
-    let newScreenDisplay = "";
-    screenDisplay = newScreenDisplay;
-    firstValue = "";
-    $("#function-screen").text(newScreenDisplay);
+    clearButton();
   } else if ($(this).attr("id") === "one") {
+    checkScreen();
     // one button
     let newScreenDisplay = "1";
     screenDisplay += newScreenDisplay;
+    setFirstValue(parseFloat(screenDisplay));
     $("#function-screen").text(screenDisplay);
   } else if ($(this).attr("id") === "two") {
+    checkScreen();
     // two button
     let newScreenDisplay = "2";
     screenDisplay += newScreenDisplay;
+    setFirstValue(parseFloat(screenDisplay));
     $("#function-screen").text(screenDisplay);
   } else if ($(this).attr("id") === "three") {
+    checkScreen();
     // three button
     let newScreenDisplay = "3";
     screenDisplay += newScreenDisplay;
+    setFirstValue(parseFloat(screenDisplay));
     $("#function-screen").text(screenDisplay);
   } else if ($(this).attr("id") === "four") {
+    checkScreen();
     // four button
     let newScreenDisplay = "4";
     screenDisplay += newScreenDisplay;
+    setFirstValue(parseFloat(screenDisplay));
     $("#function-screen").text(screenDisplay);
   } else if ($(this).attr("id") === "five") {
+    checkScreen();
     // five button
     let newScreenDisplay = "5";
     screenDisplay += newScreenDisplay;
+    setFirstValue(parseFloat(screenDisplay));
     $("#function-screen").text(screenDisplay);
   } else if ($(this).attr("id") === "six") {
+    checkScreen();
     // six button
     let newScreenDisplay = "6";
     screenDisplay += newScreenDisplay;
+    setFirstValue(parseFloat(screenDisplay));
     $("#function-screen").text(screenDisplay);
   } else if ($(this).attr("id") === "seven") {
+    checkScreen();
     // seven button
     let newScreenDisplay = "7";
     screenDisplay += newScreenDisplay;
+    setFirstValue(parseFloat(screenDisplay));
     $("#function-screen").text(screenDisplay);
   } else if ($(this).attr("id") === "eight") {
+    checkScreen();
     // eight button
     let newScreenDisplay = "8";
     screenDisplay += newScreenDisplay;
+    setFirstValue(parseFloat(screenDisplay));
     $("#function-screen").text(screenDisplay);
   } else if ($(this).attr("id") === "nine") {
+    checkScreen();
     // nine button
     let newScreenDisplay = "9";
     screenDisplay += newScreenDisplay;
+    setFirstValue(parseFloat(screenDisplay));
     $("#function-screen").text(screenDisplay);
   } else if ($(this).attr("id") === "zero") {
+    checkScreen();
     // zero button
     let newScreenDisplay = "0";
     screenDisplay += newScreenDisplay;
+    setFirstValue(parseFloat(screenDisplay));
     $("#function-screen").text(screenDisplay);
   } else if ($(this).attr("id") === "decimal") {
     // decimal button
     let newScreenDisplay = "";
-
-    console.log(screenDisplay.charAt(screenDisplay.length - 1));
 
     if (screenDisplay === "") {
       newScreenDisplay = "0.0";
@@ -97,9 +112,17 @@ $("button").on("click", function () {
       );
     } // if
 
+    // Figure out what operation to perform.
     var result = 0.0;
-    if (operatorChoice === " + ") {
+
+    if (operatorChoice === "+") {
       result = firstValue + secondValue;
+    } else if (operatorChoice === "-") {
+      result = firstValue - secondValue;
+    } else if (operatorChoice === "*") {
+      result = firstValue * secondValue;
+    } else if (operatorChoice === "/") {
+      result = firstValue / secondValue;
     } // if
 
     resultDisplay = result.toString();
@@ -111,40 +134,35 @@ $("button").on("click", function () {
     $("#function-screen").text(screenDisplay);
   } else if ($(this).attr("id") === "add") {
     console.log("PLUS!");
-    operatorChoice = " + ";
-    if (firstValue === undefined || firstValue === null || firstValue === "") {
-      firstValue = 0.0;
-    } else {
-      firstValue = screenDisplay;
-    } // if
-    firstValue = parseFloat(firstValue);
-    screenDisplay += operatorChoice;
-    $("#function-screen").text(screenDisplay);
-    //calculate("+");
+    calculate("+");
   } else if ($(this).attr("id") === "subtract") {
     console.log("MINUS!");
-    //calculate("-");
+    calculate("-");
   } else if ($(this).attr("id") === "multiply") {
     console.log("MULTIPLY!");
-    //calculate("*");
+    calculate("*");
   } else if ($(this).attr("id") === "divide") {
     console.log("DIVIDE!");
-    //calculate("/");
+    calculate("/");
   } // else if
 });
 
-/*
+function setFirstValue(number) {
+  firstValue = number;
+} // set first value
+
 // Perform the calculation
 function calculate(operator) {
-  if (screenDisplay === "") {
-    resultDisplay = "0";
+  operatorChoice = operator;
+  if (firstValue === undefined || firstValue === null || firstValue === "") {
+    firstValue = 0.0;
   } else {
-    resultDisplay += screenDisplay + " " + operator;
+    firstValue = parseFloat(screenDisplay);
   } // if
-  $("#result-screen").text(parseFloat(resultDisplay));
-  console.log(resultDisplay);
+  screenDisplay += operatorChoice;
+
+  $("#function-screen").text(screenDisplay);
 } // calculate
-*/
 
 // Check if there is more than one decimal in a number.
 function moreThanOneDecimal(number) {
@@ -156,3 +174,18 @@ function moreThanOneDecimal(number) {
   } // for
   return count > 1;
 } // check decimal amount
+
+// Clears the screen.
+function clearButton() {
+  let newScreenDisplay = "";
+  screenDisplay = newScreenDisplay;
+  firstValue = "";
+  $("#function-screen").text(newScreenDisplay);
+} // clear button
+
+// Checks if the display screen is longer than needed and clears if so.
+function checkScreen() {
+  if (screenDisplay.length >= 3) {
+    clearButton();
+  } // if
+} // check screen
