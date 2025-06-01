@@ -5,6 +5,8 @@ var operatorChoice = "";
 var firstValue = 0.0;
 var secondValue = 0.0;
 
+var cleared = false;
+
 $("button").on("click", function () {
   if ($(this).attr("id") === "clear") {
     // clear button
@@ -107,9 +109,18 @@ $("button").on("click", function () {
     ) {
       secondValue = 0.0;
     } else {
-      secondValue = parseFloat(
-        newScreenDisplay.charAt(newScreenDisplay.length - 1)
-      );
+      //secondValue = parseFloat();
+      // newScreenDisplay.charAt(newScreenDisplay.length - 1)
+      var concat = "";
+      for (
+        let i = newScreenDisplay.length - 1;
+        i > newScreenDisplay.indexOf(operatorChoice);
+        i--
+      ) {
+        concat += newScreenDisplay.charAt(i);
+        concat = concat.split("").reverse().join("");
+      } // for
+      secondValue = parseFloat(concat);
     } // if
 
     // Figure out what operation to perform.
@@ -125,6 +136,7 @@ $("button").on("click", function () {
       result = firstValue / secondValue;
     } // if
 
+    cleared = true;
     resultDisplay = result.toString();
     $("#result-screen").text(resultDisplay);
   } else if ($(this).attr("id") === "change-sign") {
@@ -133,20 +145,17 @@ $("button").on("click", function () {
     screenDisplay = new String(newScreenDisplay);
     $("#function-screen").text(screenDisplay);
   } else if ($(this).attr("id") === "add") {
-    console.log("PLUS!");
     calculate("+");
   } else if ($(this).attr("id") === "subtract") {
-    console.log("MINUS!");
     calculate("-");
   } else if ($(this).attr("id") === "multiply") {
-    console.log("MULTIPLY!");
     calculate("*");
   } else if ($(this).attr("id") === "divide") {
-    console.log("DIVIDE!");
     calculate("/");
   } // else if
 });
 
+// Set first value variable
 function setFirstValue(number) {
   firstValue = number;
 } // set first value
@@ -159,7 +168,11 @@ function calculate(operator) {
   } else {
     firstValue = parseFloat(screenDisplay);
   } // if
-  screenDisplay += operatorChoice;
+
+  // Check if the operator has been added to the screen display string.
+  if (screenDisplay.charAt(screenDisplay.length - 1) !== operator.toString()) {
+    screenDisplay += operatorChoice;
+  } // if
 
   $("#function-screen").text(screenDisplay);
 } // calculate
@@ -185,7 +198,13 @@ function clearButton() {
 
 // Checks if the display screen is longer than needed and clears if so.
 function checkScreen() {
-  if (screenDisplay.length >= 3) {
+  if (
+    secondValue !== undefined &&
+    secondValue !== null &&
+    secondValue !== "" &&
+    cleared
+  ) {
     clearButton();
   } // if
+  cleared = false;
 } // check screen
