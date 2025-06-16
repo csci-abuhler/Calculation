@@ -99,6 +99,9 @@ $("button").on("click", function () {
       screenDisplay = "0.0";
     } // if
     $("#function-screen").text(screenDisplay);
+  } else if ($(this).attr("id") === "percent") {
+    // percent button
+    $("#function-screen").text(parseFloat(screenDisplay) / 10);
   } else if ($(this).attr("id") === "equals") {
     let newScreenDisplay = screenDisplay;
 
